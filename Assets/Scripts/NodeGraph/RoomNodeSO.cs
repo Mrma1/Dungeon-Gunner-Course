@@ -22,6 +22,8 @@ public class RoomNodeSO : ScriptableObject
     public void Initialise(Rect rect, RoomNodeGraphSO roomNodeGraph, RoomNodeTypeSO roomNodeType)
     {
         this.rect = rect;
+        id = Guid.NewGuid().ToString();
+        name = "RoomNode";
         this.roomNodeGraph = roomNodeGraph;
         this.roomNodeType = roomNodeType;
         
@@ -82,12 +84,21 @@ public class RoomNodeSO : ScriptableObject
         {
             ProcessLeftClickDownEvent();
         }
+        else if (currentEvent.button == 1)
+        {
+            ProcessRightClickDownEvent(currentEvent);
+        }
     }
 
     private void ProcessLeftClickDownEvent()
     {
         Selection.activeObject = this;
         isSelected = !isSelected;
+    }
+
+    private void ProcessRightClickDownEvent(Event currentEvent)
+    {
+        roomNodeGraph.SetNodeToDrawConnectionLineFrom(this, currentEvent.mousePosition);
     }
     
     private void ProcessMouseUpEvent(Event currentEvent)
@@ -126,7 +137,18 @@ public class RoomNodeSO : ScriptableObject
         rect.position += delta;
         EditorUtility.SetDirty(this);
     }
-    
+
+    public bool AddChildRoomNodeIDToRoomNode(string childID)
+    {
+        childRoomNodeIDList.Add(childID);
+        return true;
+    }
+
+    public bool AddParentRoomNodeIDToRoomNode(string parentID)
+    {
+        parentRoomNodeIDList.Add(parentID);
+        return true;
+    }
 #endif
 
     #endregion
