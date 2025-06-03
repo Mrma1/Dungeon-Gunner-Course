@@ -22,4 +22,6 @@ public class GameResources : MonoBehaviour
     [Space(10)]
     [Header("地牢")]
     public RoomNodeTypeListSO roomNodeTypeList;
+    //昏暗材质
+    public Material dimmedMaterial;
 }

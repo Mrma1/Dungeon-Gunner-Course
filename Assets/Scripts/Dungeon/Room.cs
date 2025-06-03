@@ -17,7 +17,7 @@ public class Room
     public string parentRoomID;
     public List<Doorway> doorWayList;
     public bool isPositioned = false;
-    public InstantiatedRoom InstantiatedRoom;
+    public InstantiatedRoom instantiatedRoom;
     public bool isLit = false;
     public bool isClearedOfEnemies = false;     //是否清除敌人
     public bool isPreviouslyVisited = false;    //是否被访问过
