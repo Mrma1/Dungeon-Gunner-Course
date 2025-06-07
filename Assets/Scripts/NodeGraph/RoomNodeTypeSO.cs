@@ -19,8 +19,8 @@ public class RoomNodeTypeSO : ScriptableObject
     public bool isEntrance;
     [Header("是否为Boss房间")]
     public bool isBossRoom;
-    [Header("是否为节点")]
-    public bool isNode;
+    [Header("是否为空节点")]
+    public bool isNone;
     
     #region Validation
 

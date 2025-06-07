@@ -270,7 +270,7 @@ public class RoomNodeGraphEditor : EditorWindow
         {
             CreateRoomNode(new Vector2(200f, 200f), roomNodeTypeList.list.Find(x => x.isEntrance));
         }
-        CreateRoomNode(mousePositionObject, roomNodeTypeList.list.Find(x => x.isNode));
+        CreateRoomNode(mousePositionObject, roomNodeTypeList.list.Find(x => x.isNone));
     }
 
     private void CreateRoomNode(object mousePositionObject, RoomNodeTypeSO roomNodeType)

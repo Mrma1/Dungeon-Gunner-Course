@@ -204,6 +204,59 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &601762902
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 601762904}
+  - component: {fileID: 601762903}
+  m_Layer: 0
+  m_Name: GameManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &601762903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601762902}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd62d388b9281a34a8cad9f7cc5a3522, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dungeonLevelList:
+  - {fileID: 11400000, guid: 902c44ea069523340aca50ff9d209f42, type: 2}
+  - {fileID: 11400000, guid: 395bff9f81002f94a9829bce2a73c1e1, type: 2}
+  - {fileID: 11400000, guid: 091e790df8ffddc45b99dc697b1ab79e, type: 2}
+  - {fileID: 11400000, guid: 92c9f350791258e4b9be3138c869265c, type: 2}
+  - {fileID: 11400000, guid: e09e0fc1592c79f40b60b244ba0dac28, type: 2}
+  - {fileID: 11400000, guid: 909e4069fbd0b824cb14f748f3b6f485, type: 2}
+  currentDungeonLevelListIndex: 2
+  gameState: 0
+--- !u!4 &601762904
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 601762902}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.6942527, y: -1.0549356, z: -0.025581604}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1128659118
 GameObject:
   m_ObjectHideFlags: 0

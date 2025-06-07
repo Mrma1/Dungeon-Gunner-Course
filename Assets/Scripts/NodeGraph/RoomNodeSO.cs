@@ -249,7 +249,7 @@ public class RoomNodeSO : ScriptableObject
             if (roomNode.roomNodeType.isBossRoom && isConnectedBossNodeAlready)
                 return false;
         
-            if (roomNode.roomNodeType.isNode)
+            if (roomNode.roomNodeType.isNone)
                 return false;
             //已经被连接
             if (roomNode.parentRoomNodeIDList.Count > 0)

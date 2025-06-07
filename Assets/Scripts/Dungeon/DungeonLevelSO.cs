@@ -67,7 +67,7 @@ public class DungeonLevelSO : ScriptableObject
                     continue;
 
                 if (roomNode.roomNodeType.isEntrance || roomNode.roomNodeType.isCorridorEW || roomNode.roomNodeType.isCorridorNS ||
-                    roomNode.roomNodeType.isCorridor || roomNode.roomNodeType.isNode)
+                    roomNode.roomNodeType.isCorridor || roomNode.roomNodeType.isNone)
                     continue;
 
                 bool isRoomNodeTypeFound = false;

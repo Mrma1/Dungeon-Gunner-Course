@@ -15,7 +15,7 @@ public class Room
     public Vector2Int[] spawnPositionArray;
     public List<string> childRoomIDList;
     public string parentRoomID;
-    public List<Doorway> doorWayList;
+    public List<Doorway> doorwayList;
     public bool isPositioned = false;
     public InstantiatedRoom instantiatedRoom;
     public bool isLit = false;
@@ -25,6 +25,6 @@ public class Room
     public Room()
     {
         childRoomIDList = new List<string>();
-        doorWayList = new List<Doorway>();
+		doorwayList = new List<Doorway>();
     }
 }

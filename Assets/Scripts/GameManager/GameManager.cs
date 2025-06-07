@@ -15,12 +15,17 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     void Start()
     {
         gameState = GameState.GameStarted;
-    }
+        HandleGameState();
+
+	}
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+			PlayDungeonLevel(currentDungeonLevelListIndex);
+		}
     }
 
     private void HandleGameState()
