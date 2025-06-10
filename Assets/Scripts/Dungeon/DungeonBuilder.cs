@@ -176,7 +176,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 				roomOverlaps = true;
 			}
 		}
-
+		
 		return true;
 	}
 
@@ -243,7 +243,7 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		}
 
 		room.lowerBounds = parentDoorwayPosition + adjustment + room.templateLowerBounds - doorway.position;
-		room.upperBounds = room.lowerBounds + room.templateLowerBounds - room.templateLowerBounds;
+		room.upperBounds = room.lowerBounds + room.templateUpperBounds - room.templateLowerBounds;
 
 		Room overlappingRoom = CheckForRoomOverlap(room);
 
@@ -408,14 +408,6 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 		room.templateLowerBounds = roomTemplate.lowerBounds;
 		room.templateUpperBounds = roomTemplate.upperBounds;
 		room.childRoomIDList = CopyStringList(roomNode.childRoomNodeIDList);
-
-		foreach (var item in roomTemplate.doorwayList)
-		{
-			item.isConnected = false;
-			item.isUnavailable = false;
-		}
-
-
 		room.doorwayList = CopyDoorwayList(roomTemplate.doorwayList);
 
 		if (roomNode.parentRoomNodeIDList.Count == 0)
@@ -460,9 +452,9 @@ public class DungeonBuilder : SingletonMonobehaviour<DungeonBuilder>
 			newDoorway.doorwayCopyTileWidth = doorway.doorwayCopyTileWidth;
 			newDoorway.doorwayCopyTileHeight = doorway.doorwayCopyTileHeight;
 
-			newDoorwayList.Add(doorway);
+			newDoorwayList.Add(newDoorway);
 		}
-
+	
 		return newDoorwayList;
 	}
 
