@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1001 &6162150346136882401
+--- !u!1001 &475483266720208303
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
@@ -10,7 +10,7 @@ PrefabInstance:
     - target: {fileID: 402289608946298204, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -299624433, guid: 039544636e081924ca6d30e45d9ab730, type: 3}
+      objectReference: {fileID: 2887896937163043261, guid: ffa25ab59b41d9d4abbfe10d88fea3d7, type: 3}
     - target: {fileID: 931422916148213111, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_Size.x
       value: 0.25
@@ -22,11 +22,7 @@ PrefabInstance:
     - target: {fileID: 931422916148213111, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 83065a31b2c89074381e7953d8da8ffd, type: 3}
-    - target: {fileID: 931422916148213111, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SortingOrder
-      value: 10
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 21300000, guid: 2788b711f80a9194096a03ef26a440cb, type: 3}
     - target: {fileID: 931422916148213111, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
@@ -42,70 +38,18 @@ PrefabInstance:
     - target: {fileID: 1318609831308071219, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 83065a31b2c89074381e7953d8da8ffd, type: 3}
+      objectReference: {fileID: 21300000, guid: 2788b711f80a9194096a03ef26a440cb, type: 3}
     - target: {fileID: 1318609831308071219, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_WasSpriteAssigned
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.pivot.x
-      value: 0.18444446
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.pivot.y
-      value: 0.37008545
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.x
-      value: 1.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.newSize.y
-      value: 0.6875
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.x
-      value: 1.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.oldSize.y
-      value: 0.6875
-      objectReference: {fileID: 0}
-    - target: {fileID: 1481940794366996853, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_SpriteTilingProperty.adaptiveTilingThreshold
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133608676201656743, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_Size.x
-      value: 1.125
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133608676201656743, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_Size.y
-      value: 0.6875
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133608676201656743, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_Sprite
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133608676201656743, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2133608676201656743, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
-      propertyPath: m_WasSpriteAssigned
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6410142977309109471, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: 13035e2a80b72a446bffe8db79895e85, type: 2}
+      objectReference: {fileID: 9100000, guid: e52ed9234b488b0449570da9e57ce474, type: 2}
     - target: {fileID: 8708256632331211204, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_Name
-      value: TheThief
+      value: TheScientist
       objectReference: {fileID: 0}
     - target: {fileID: 9163433687821312294, guid: 56cf3abb7deabe3429d73b3740377898, type: 3}
       propertyPath: m_RootOrder
