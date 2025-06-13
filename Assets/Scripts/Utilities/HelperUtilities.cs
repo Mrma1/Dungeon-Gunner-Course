@@ -4,6 +4,78 @@ using UnityEngine;
 
 public static class HelperUtilities
 {
+    public static Camera mainCamera;
+
+    /// <summary>
+    /// 获取鼠标屏幕位置对应的世界坐标
+    /// </summary>
+    /// <returns></returns>
+    public static Vector3 GetMouseWorldPosition()
+    {
+        if (mainCamera == null) mainCamera = Camera.main;
+
+        Vector3 mouseScreenPosition = Input.mousePosition;
+
+        mouseScreenPosition.x = Mathf.Clamp(mouseScreenPosition.x, 0f, Screen.width);
+        mouseScreenPosition.y = Mathf.Clamp(mouseScreenPosition.y, 0f, Screen.height);
+
+        Vector3 worldPosition = mainCamera.WorldToScreenPoint(mouseScreenPosition);
+
+        worldPosition.z = 0f;
+
+        return worldPosition;
+    }
+
+    /// <summary>
+    /// 通过向量获取角度
+    /// </summary>
+    /// <param name="vector"></param>
+    /// <returns></returns>
+    public static float GetAngleFromVector(Vector3 vector)
+    {
+        float radians = Mathf.Atan2(vector.x, vector.y);
+
+        float degrees = radians * Mathf.Rad2Deg;
+
+        return degrees;
+    }
+
+    public static AimDirection GetAimDirection(float angleDegrees)
+    {
+        AimDirection aimDirection;
+
+        if(angleDegrees >= 22f && angleDegrees <= 67f)
+        {
+            aimDirection = AimDirection.UpRight;
+        }
+        else if(angleDegrees > 67f && angleDegrees <= 112f)
+        {
+            aimDirection = AimDirection.Up;
+        }
+        else if (angleDegrees > 112f && angleDegrees <= 158f)
+        {
+            aimDirection = AimDirection.UpLeft;
+        }
+        else if((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
+        {
+            aimDirection = AimDirection.Left;
+        }
+        else if(angleDegrees > -135f && angleDegrees <=-45f)
+        {
+            aimDirection = AimDirection.Down;
+        }
+        else if((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
+        {
+            aimDirection = AimDirection.Right;
+        }
+        else
+        {
+            aimDirection = AimDirection.Right;
+        }    
+
+        return aimDirection;
+    }
+
     public static bool ValidateCheckEmptyString(Object thisObject, string fileName, string stringToCheck)
     {
         if (stringToCheck == "")
@@ -50,7 +122,6 @@ public static class HelperUtilities
             {
                 Debug.Log(fileName + " has null values in object" + thisObject.name.ToString());
                 error = true;
-                
             }
             else
             {
