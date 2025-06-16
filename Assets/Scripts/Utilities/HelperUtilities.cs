@@ -19,7 +19,7 @@ public static class HelperUtilities
         mouseScreenPosition.x = Mathf.Clamp(mouseScreenPosition.x, 0f, Screen.width);
         mouseScreenPosition.y = Mathf.Clamp(mouseScreenPosition.y, 0f, Screen.height);
 
-        Vector3 worldPosition = mainCamera.WorldToScreenPoint(mouseScreenPosition);
+        Vector3 worldPosition = mainCamera.ScreenToWorldPoint(mouseScreenPosition);
 
         worldPosition.z = 0f;
 
@@ -33,7 +33,7 @@ public static class HelperUtilities
     /// <returns></returns>
     public static float GetAngleFromVector(Vector3 vector)
     {
-        float radians = Mathf.Atan2(vector.x, vector.y);
+        float radians = Mathf.Atan2(vector.y, vector.x);
 
         float degrees = radians * Mathf.Rad2Deg;
 
@@ -162,7 +162,47 @@ public static class HelperUtilities
         return error;
     }
 
-    public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
+	public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
+	{
+		bool error = false;
+
+		if (isZeroAllowed)
+		{
+			if (valueToCheck < 0)
+			{
+				Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
+				error = true;
+			}
+		}
+		else
+		{
+			if (valueToCheck <= 0)
+			{
+				Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
+				error = true;
+			}
+		}
+
+		return error;
+	}
+
+    public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum, string fieldNameMaximum, 
+        float valueToCheckMaximum, bool isZeroAllowed)
+    {
+        bool error = false;
+        if (valueToCheckMinimum > valueToCheckMaximum)
+        {
+            Debug.Log(fieldNameMinimum + "must be less than or equal to " + fieldNameMaximum + " in object " + thisObject.name.ToString());
+            error = true;
+        }
+
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed)) error = true;
+		if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed)) error = true;
+
+        return error;
+	}
+
+	public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
     {
         Room currentRoom = GameManager.Instance.GetCurrentRoom();
 
