@@ -9,6 +9,10 @@ public class PlayerControl : MonoBehaviour
 
     private Player player;
 	private float moveSpeed;
+	private Coroutine playerRollCoroutine;
+	private WaitForFixedUpdate waitForFixedUpdate;
+	private bool isPlayerRolling = false;
+	private float playerRollCooldownTimer = 0f;
 
 	private void Awake()
 	{
@@ -16,17 +20,34 @@ public class PlayerControl : MonoBehaviour
 		moveSpeed = movementDetails.GetMoveSpeed();
 	}
 
+	private void Start()
+	{
+		waitForFixedUpdate = new WaitForFixedUpdate();
+
+		SetPlayerAnimationSpeed();
+	}
+
+	private void SetPlayerAnimationSpeed()
+	{
+		player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
+	}
+	
 	private void Update()
 	{
+		if (isPlayerRolling) return;
+
 		MovementInput();
 
 		WeaponInput();
+
+		PlayerRollCooldownTimer();
 	}
 
 	private void MovementInput()
 	{
 		float horizontalMovement = Input.GetAxisRaw("Horizontal");
 		float verticalMovement = Input.GetAxisRaw("Vertical");
+		bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
 
 		Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
 
@@ -37,7 +58,14 @@ public class PlayerControl : MonoBehaviour
 
 		if(direction != Vector2.zero)
 		{
-			player.movementByVelocityEvnet.CallMovementByVelocityEvent(direction, moveSpeed);
+			if(!rightMouseButtonDown)
+			{
+				player.movementByVelocityEvnet.CallMovementByVelocityEvent(direction, moveSpeed);
+			}
+			else if(playerRollCooldownTimer <= 0f)
+			{
+				PlayerRoll((Vector3)direction);
+			}
 		}
 		else
 		{
@@ -66,6 +94,60 @@ public class PlayerControl : MonoBehaviour
 		playerAimDirection = HelperUtilities.GetAimDirection(playerAngleDegrees);
 
 		player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+	}
+
+	private void PlayerRoll(Vector3 direction)
+	{
+		playerRollCoroutine = StartCoroutine(PlayerRollRoutine(direction));
+	}
+
+	private IEnumerator PlayerRollRoutine(Vector3 direction)
+	{
+		float minDistance = 0.2f;
+
+		isPlayerRolling = true;
+
+		Vector3 targetPosition = player.transform.position + direction * movementDetails.rollDistance;
+
+		while (Vector3.Distance(targetPosition, player.transform.position) > minDistance)
+		{
+			player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position, movementDetails.rollSpeed, direction, isPlayerRolling);
+
+			yield return waitForFixedUpdate;
+		}
+
+		isPlayerRolling = false;
+
+		playerRollCooldownTimer = movementDetails.rollCooldownTime;
+
+		player.transform.position = targetPosition;
+	}
+
+	private void PlayerRollCooldownTimer()
+	{
+		if(playerRollCooldownTimer >= 0)
+		{
+			playerRollCooldownTimer -= Time.deltaTime;
+		}
+	}
+
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		StopPlayerRollRoutine();
+	}
+
+	private void OnCollisionStay2D(Collision2D collision)
+	{
+		StopPlayerRollRoutine();
+	}
+
+	private void StopPlayerRollRoutine()
+	{
+		if(playerRollCoroutine != null)
+		{
+			StopCoroutine(playerRollCoroutine);
+			isPlayerRolling = false;
+		}
 	}
 
 	#region Validation

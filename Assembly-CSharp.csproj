@@ -64,10 +64,10 @@
     <Compile Include="Assets\Scripts\Dungeon\DungeonLevelSO.cs" />
     <Compile Include="Assets\Scripts\NodeGraph\RoomNodeTypeListSO.cs" />
     <Compile Include="Assets\Scripts\Movement\Idle.cs" />
-    <Compile Include="Assets\Scripts\Weapons\AimWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\AimWeapon.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
     <Compile Include="Assets\Scripts\NodeGraph\RoomNodeTypeSO.cs" />
-    <Compile Include="Assets\Scripts\Weapons\AimWeaponEvent.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\AimWeaponEvent.cs" />
     <Compile Include="Assets\Scripts\NodeGraph\RoomNodeGraphSO.cs" />
     <Compile Include="Assets\Scripts\Health\Health.cs" />
     <Compile Include="Assets\Scripts\Dungeon\InstantiatedRoom.cs" />
@@ -89,6 +89,17 @@
     <Compile Include="Assets\Scripts\Movement\MovementDetailsSO.cs" />
     <Compile Include="Assets\Scripts\Movement\MovementByVelocityEvnet.cs" />
     <Compile Include="Assets\Scripts\Movement\MovementByVelocity.cs" />
+    <Compile Include="Assets\Scripts\Movement\MovementToPositionEvent.cs" />
+    <Compile Include="Assets\Scripts\Movement\MovementToPosition.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\Door.cs" />
+    <Compile Include="Assets\Scripts\StaticEvents\StaticEventHandler.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\DoorLightingControl.cs" />
+    <Compile Include="Assets\Scripts\Dungeon\RoomLightingControl.cs" />
+    <Compile Include="Assets\Scripts\PoolManager\PoolManager.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\WeaponDetailsSO.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Ammo\AmmoDetailsSO.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Ammo\IFireable.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Ammo\Ammo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
