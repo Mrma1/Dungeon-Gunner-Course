@@ -17,7 +17,7 @@ public class AnimatePlayer : MonoBehaviour
 	{
 		player.idleEvent.OnIdle += IdleEvent_OnIdle;
 		player.aimWeaponEvent.OnWeapoAim += AimWeaponEvent_OnAimWeapon;
-		player.movementByVelocityEvnet.OnMovementByVelocity += MovementByVelocityEvnet_OnMovementByVelocity;
+		player.movementByVelocityEvent.OnMovementByVelocity += MovementByVelocityEvnet_OnMovementByVelocity;
 		player.movementToPositionEvent.OnMovementToPosition += MovementToPositionEvent_OnMovementToPosition;
 	}
 
@@ -25,7 +25,7 @@ public class AnimatePlayer : MonoBehaviour
 	{
 		player.idleEvent.OnIdle -= IdleEvent_OnIdle;
 		player.aimWeaponEvent.OnWeapoAim -= AimWeaponEvent_OnAimWeapon;
-		player.movementByVelocityEvnet.OnMovementByVelocity -= MovementByVelocityEvnet_OnMovementByVelocity;
+		player.movementByVelocityEvent.OnMovementByVelocity -= MovementByVelocityEvnet_OnMovementByVelocity;
 		player.movementToPositionEvent.OnMovementToPosition -= MovementToPositionEvent_OnMovementToPosition;
 	}
 

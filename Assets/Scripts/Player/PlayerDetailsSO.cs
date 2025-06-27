@@ -12,6 +12,9 @@ public class PlayerDetailsSO : ScriptableObject
     public Sprite playerMiniMapIcon;
     public Sprite playerHandSprite;
 
+    public WeaponDetailsSO startingWeapon;
+    public List<WeaponDetailsSO> startingWeaponList;
+
 	#region Validation
 #if UNITY_EDITOR
 	private void OnValidate()
@@ -22,6 +25,8 @@ public class PlayerDetailsSO : ScriptableObject
 		HelperUtilities.ValidateCheckNullValue(this, nameof(playerMiniMapIcon), playerMiniMapIcon);
 		HelperUtilities.ValidateCheckNullValue(this, nameof(playerHandSprite), playerHandSprite);
 		HelperUtilities.ValidateCheckNullValue(this, nameof(runtimeAnimatorController), runtimeAnimatorController);
+		HelperUtilities.ValidateCheckNullValue(this, nameof(startingWeapon), startingWeapon);
+		HelperUtilities.ValidateCheckEnumerableValues(this, nameof(startingWeaponList), startingWeaponList);
 	}
 #endif
 	#endregion

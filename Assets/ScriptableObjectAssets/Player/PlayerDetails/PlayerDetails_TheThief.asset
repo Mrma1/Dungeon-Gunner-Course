@@ -18,3 +18,6 @@ MonoBehaviour:
   playerHealthAmount: 80
   playerMiniMapIcon: {fileID: 21300000, guid: 7c2a0a34cb649c541ba1f98c2bf265af, type: 3}
   playerHandSprite: {fileID: 21300000, guid: 83065a31b2c89074381e7953d8da8ffd, type: 3}
+  startingWeapon: {fileID: 11400000, guid: eb928bc8aa95fb142b0bfd6bb50e3ee9, type: 2}
+  startingWeaponList:
+  - {fileID: 11400000, guid: eb928bc8aa95fb142b0bfd6bb50e3ee9, type: 2}

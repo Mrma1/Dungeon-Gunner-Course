@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
+[DisallowMultipleComponent]
 public class PlayerControl : MonoBehaviour
 {
 	[SerializeField] private MovementDetailsSO movementDetails;
@@ -11,6 +13,8 @@ public class PlayerControl : MonoBehaviour
 	private float moveSpeed;
 	private Coroutine playerRollCoroutine;
 	private WaitForFixedUpdate waitForFixedUpdate;
+	
+	private int currentWeaponIndex = 0;
 	private bool isPlayerRolling = false;
 	private float playerRollCooldownTimer = 0f;
 
@@ -24,9 +28,35 @@ public class PlayerControl : MonoBehaviour
 	{
 		waitForFixedUpdate = new WaitForFixedUpdate();
 
+		SetStartingWeapon();
+		
 		SetPlayerAnimationSpeed();
 	}
 
+	private void SetStartingWeapon()
+	{
+		int index = 1;
+		foreach (Weapon weapon in player.weaponList)
+		{
+			if (weapon.weaponDetails == player.playerDetails.startingWeapon)
+			{
+				SetWeaponByIndex(index);
+				break;
+			}
+			
+			index++;
+		}
+	}
+
+	private void SetWeaponByIndex(int weaponIndex)
+	{
+		if (weaponIndex -1 < player.weaponList.Count)
+		{
+			currentWeaponIndex = weaponIndex;
+			player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[weaponIndex - 1]);
+		}
+	}
+	
 	private void SetPlayerAnimationSpeed()
 	{
 		player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
@@ -60,7 +90,7 @@ public class PlayerControl : MonoBehaviour
 		{
 			if(!rightMouseButtonDown)
 			{
-				player.movementByVelocityEvnet.CallMovementByVelocityEvent(direction, moveSpeed);
+				player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
 			}
 			else if(playerRollCooldownTimer <= 0f)
 			{

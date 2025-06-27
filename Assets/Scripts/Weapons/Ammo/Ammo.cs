@@ -7,14 +7,14 @@ public class Ammo : MonoBehaviour, IFireable
 {
 	[SerializeField] private TrailRenderer trailRenderer;
 
-	// Éä³Ì·¶Î§
+	// å°„ç¨‹èŒƒå›´
 	private float ammoRange = 0f;
 	private float ammoSpeed;
 	private Vector3 fireDirectionVector;
 	private float fireDirectionAngle;
 	private SpriteRenderer spriteRenderer;
 	private AmmoDetailsSO ammoDetails;
-	//Ìî³ä¼ÆÊ±
+	//å¡«å……è®¡æ—¶
 	private float ammoChargeTimer;
 	private bool isAmmoMaterialSet = false;
 	private bool overrideAmmoMovement;
@@ -37,7 +37,7 @@ public class Ammo : MonoBehaviour, IFireable
 			isAmmoMaterialSet = true;
 		}
 
-		//ÒÆ¶¯
+		//ç§»åŠ¨
 		Vector3 distanceVector = fireDirectionVector * ammoSpeed * Time.deltaTime;
 		transform.position += distanceVector;
 
@@ -106,13 +106,13 @@ public class Ammo : MonoBehaviour, IFireable
 
 	private void SetFirDirection(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
 	{
-		//Ëæ»úÉ¢Éä´óĞ¡
+		//éšæœºæ•£å°„å¤§å°
 		float randomSpread = Random.Range(ammoDetails.ammoSpreadMin, ammoDetails.ammoSpreadMax);
 
-		//Ëæ»ú -1»òÕß1
+		//éšæœº -1æˆ–è€…1
 		int spreadToggle = Random.Range(0, 2) * 2 - 1;
 
-		//ÅĞ¶ÏÉä»÷ÏòÁ¿¾àÀë£¬Èç¹ûĞ¡ÓÚ×îĞ¡¾àÀëÊ¹ÓÃ×ÔÉí½Ç¶È£¬·ñÔòÊ¹ÓÃÎäÆ÷½Ç¶È
+		//åˆ¤æ–­å°„å‡»å‘é‡è·ç¦»ï¼Œå¦‚æœå°äºæœ€å°è·ç¦»ä½¿ç”¨è‡ªèº«è§’åº¦ï¼Œå¦åˆ™ä½¿ç”¨æ­¦å™¨è§’åº¦
 		if(weaponAimDirectionVector.magnitude < Settings.useAimAngleDistance)
 		{
 			fireDirectionAngle = aimAngle;
@@ -122,9 +122,9 @@ public class Ammo : MonoBehaviour, IFireable
 			fireDirectionAngle = weaponAimAngle;
 		}
 
-		//Ìí¼ÓÉ¢ÉäÆ«ÒÆ
+		//æ·»åŠ æ•£å°„åç§»
 		fireDirectionAngle += spreadToggle * randomSpread;
-		//Ó¦ÓÃ½Ç¶È
+		//åº”ç”¨è§’åº¦
 		transform.transform.eulerAngles = new Vector3(0, 0, fireDirectionAngle);
 
 		fireDirectionVector = HelperUtilities.GetDirectionVectorFromAngle(fireDirectionAngle);

@@ -8,19 +8,19 @@ public class WeaponDetailsSO : ScriptableObject
     public Vector3 weaponShootPosition;
     public AmmoDetailsSO weaponCurrentAmmo;
 
-    [Header("ÎŞÏŞµ¯Ò©")]
+    [Header("æ— é™å¼¹è¯")]
     public bool hasInfiniteAmmo = false;
-    [Header("ÎŞÏŞµ¯Ò©ÈİÁ¿")]
+    [Header("æ— é™å¼¹è¯å®¹é‡")]
     public bool hasInfiniteClipCapacity = false;
-    [Header("Ò»´Îµ¯¼ĞÈİÁ¿")]
+    [Header("ä¸€æ¬¡å¼¹å¤¹å®¹é‡")]
     public int weaponClipAmmoCapacity = 6;
-    [Header("×Üµ¯Ò©ÈİÁ¿")]
+    [Header("æ€»å¼¹è¯å®¹é‡")]
     public int weaponAmmoCapacity = 100;
-    [Header("ÎäÆ÷ÉäËÙ")]
+    [Header("æ­¦å™¨å°„é€Ÿ")]
     public float weaponFireRate = 0.2f;
-    [Header("Éä»÷¼ä¸ô")]
+    [Header("å°„å‡»é—´éš”")]
     public float weaponPrechargeTime = 0f;
-	[Header("µ¯Ò©Ìî³äËÙ¶È")]
+	[Header("å¼¹è¯å¡«å……é€Ÿåº¦")]
 	public float weaponReloadTime = 0f;
 
 	#region  Validation
@@ -32,6 +32,7 @@ public class WeaponDetailsSO : ScriptableObject
         HelperUtilities.ValidateCheckNullValue(this, nameof(weaponCurrentAmmo), weaponCurrentAmmo);
         HelperUtilities.ValidateCheckPositiveValue(weaponSprite, nameof(weaponFireRate), weaponFireRate, false);
 		HelperUtilities.ValidateCheckPositiveValue(weaponSprite, nameof(weaponPrechargeTime), weaponFireRate, true);
+
 
 		if (!hasInfiniteAmmo)
         {
