@@ -6,190 +6,222 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class PlayerControl : MonoBehaviour
 {
-	[SerializeField] private MovementDetailsSO movementDetails;
-    [SerializeField] private Transform weaponShootPosition;
+    [SerializeField] private MovementDetailsSO movementDetails;
 
     private Player player;
-	private float moveSpeed;
-	private Coroutine playerRollCoroutine;
-	private WaitForFixedUpdate waitForFixedUpdate;
-	
-	private int currentWeaponIndex = 0;
-	private bool isPlayerRolling = false;
-	private float playerRollCooldownTimer = 0f;
+    private float moveSpeed;
+    private Coroutine playerRollCoroutine;
+    private WaitForFixedUpdate waitForFixedUpdate;
 
-	private void Awake()
-	{
-		player = GetComponent<Player>();
-		moveSpeed = movementDetails.GetMoveSpeed();
-	}
+    private int currentWeaponIndex = 0;
+    private bool isPlayerRolling = false;
+    private float playerRollCooldownTimer = 0f;
 
-	private void Start()
-	{
-		waitForFixedUpdate = new WaitForFixedUpdate();
+    private void Awake()
+    {
+        player = GetComponent<Player>();
+        moveSpeed = movementDetails.GetMoveSpeed();
+    }
 
-		SetStartingWeapon();
-		
-		SetPlayerAnimationSpeed();
-	}
+    private void Start()
+    {
+        waitForFixedUpdate = new WaitForFixedUpdate();
 
-	private void SetStartingWeapon()
-	{
-		int index = 1;
-		foreach (Weapon weapon in player.weaponList)
-		{
-			if (weapon.weaponDetails == player.playerDetails.startingWeapon)
-			{
-				SetWeaponByIndex(index);
-				break;
-			}
-			
-			index++;
-		}
-	}
+        SetStartingWeapon();
 
-	private void SetWeaponByIndex(int weaponIndex)
-	{
-		if (weaponIndex -1 < player.weaponList.Count)
-		{
-			currentWeaponIndex = weaponIndex;
-			player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[weaponIndex - 1]);
-		}
-	}
-	
-	private void SetPlayerAnimationSpeed()
-	{
-		player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
-	}
-	
-	private void Update()
-	{
-		if (isPlayerRolling) return;
+        SetPlayerAnimationSpeed();
+    }
 
-		MovementInput();
+    private void SetStartingWeapon()
+    {
+        int index = 1;
+        foreach (Weapon weapon in player.weaponList)
+        {
+            if (weapon.weaponDetails == player.playerDetails.startingWeapon)
+            {
+                SetWeaponByIndex(index);
+                break;
+            }
 
-		WeaponInput();
+            index++;
+        }
+    }
 
-		PlayerRollCooldownTimer();
-	}
+    private void SetWeaponByIndex(int weaponIndex)
+    {
+        if (weaponIndex - 1 < player.weaponList.Count)
+        {
+            currentWeaponIndex = weaponIndex;
+            player.setActiveWeaponEvent.CallSetActiveWeaponEvent(player.weaponList[weaponIndex - 1]);
+        }
+    }
 
-	private void MovementInput()
-	{
-		float horizontalMovement = Input.GetAxisRaw("Horizontal");
-		float verticalMovement = Input.GetAxisRaw("Vertical");
-		bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
+    private void SetPlayerAnimationSpeed()
+    {
+        player.animator.speed = moveSpeed / Settings.baseSpeedForPlayerAnimations;
+    }
 
-		Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
+    private void Update()
+    {
+        if (isPlayerRolling) return;
 
-		if (direction.x != 0 && direction.y != 0) 
-		{
-			direction *= 0.7f;
-		}
+        MovementInput();
 
-		if(direction != Vector2.zero)
-		{
-			if(!rightMouseButtonDown)
-			{
-				player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
-			}
-			else if(playerRollCooldownTimer <= 0f)
-			{
-				PlayerRoll((Vector3)direction);
-			}
-		}
-		else
-		{
-			player.idleEvent.CallIdleEvent();
-		}	
-	}
+        WeaponInput();
 
-	private void WeaponInput()
-	{
-		Vector3 weaponDirection;
-		float weaponAngleDegrees, playerAngleDegrees;
-		AimDirection playerAimDirection;
+        PlayerRollCooldownTimer();
+    }
 
-		AimWeaponInput(out weaponDirection, out weaponAngleDegrees, out playerAngleDegrees, out playerAimDirection);
-	}
+    private void MovementInput()
+    {
+        float horizontalMovement = Input.GetAxisRaw("Horizontal");
+        float verticalMovement = Input.GetAxisRaw("Vertical");
+        bool rightMouseButtonDown = Input.GetMouseButtonDown(1);
 
-	private void AimWeaponInput(out Vector3 weaponDirection, out float weaponAngleDegrees, out float playerAngleDegrees, out AimDirection playerAimDirection)
-	{
-		Vector3 mouseWorldPosition = HelperUtilities.GetMouseWorldPosition();
-		weaponDirection = mouseWorldPosition - weaponShootPosition.position;
+        Vector2 direction = new Vector2(horizontalMovement, verticalMovement);
 
-		Vector3 playerDirection = mouseWorldPosition - transform.position;
+        if (direction.x != 0 && direction.y != 0)
+        {
+            direction *= 0.7f;
+        }
 
-		weaponAngleDegrees = HelperUtilities.GetAngleFromVector(weaponDirection);
-		playerAngleDegrees = HelperUtilities.GetAngleFromVector(playerDirection);
-		playerAimDirection = HelperUtilities.GetAimDirection(playerAngleDegrees);
+        if (direction != Vector2.zero)
+        {
+            if (!rightMouseButtonDown)
+            {
+                player.movementByVelocityEvent.CallMovementByVelocityEvent(direction, moveSpeed);
+            }
+            else if (playerRollCooldownTimer <= 0f)
+            {
+                PlayerRoll((Vector3)direction);
+            }
+        }
+        else
+        {
+            player.idleEvent.CallIdleEvent();
+        }
+    }
 
-		player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
-	}
+    private void WeaponInput()
+    {
+        Vector3 weaponDirection;
+        float weaponAngleDegrees, playerAngleDegrees;
+        AimDirection playerAimDirection;
 
-	private void PlayerRoll(Vector3 direction)
-	{
-		playerRollCoroutine = StartCoroutine(PlayerRollRoutine(direction));
-	}
+        AimWeaponInput(out weaponDirection, out weaponAngleDegrees, out playerAngleDegrees, out playerAimDirection);
 
-	private IEnumerator PlayerRollRoutine(Vector3 direction)
-	{
-		float minDistance = 0.2f;
+        FireWeaponInput(weaponDirection, weaponAngleDegrees, playerAngleDegrees, playerAimDirection);
 
-		isPlayerRolling = true;
+        ReloadWeaponInput();
+    }
 
-		Vector3 targetPosition = player.transform.position + direction * movementDetails.rollDistance;
+    private void AimWeaponInput(out Vector3 weaponDirection, out float weaponAngleDegrees, out float playerAngleDegrees, out AimDirection playerAimDirection)
+    {
+        Vector3 mouseWorldPosition = HelperUtilities.GetMouseWorldPosition();
+        weaponDirection = mouseWorldPosition - player.activeWeapon.GetShootPosition();
 
-		while (Vector3.Distance(targetPosition, player.transform.position) > minDistance)
-		{
-			player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position, movementDetails.rollSpeed, direction, isPlayerRolling);
+        Vector3 playerDirection = mouseWorldPosition - transform.position;
 
-			yield return waitForFixedUpdate;
-		}
+        weaponAngleDegrees = HelperUtilities.GetAngleFromVector(weaponDirection);
+        playerAngleDegrees = HelperUtilities.GetAngleFromVector(playerDirection);
+        playerAimDirection = HelperUtilities.GetAimDirection(playerAngleDegrees);
 
-		isPlayerRolling = false;
+        player.aimWeaponEvent.CallAimWeaponEvent(playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+    }
 
-		playerRollCooldownTimer = movementDetails.rollCooldownTime;
+    private void FireWeaponInput(Vector3 weaponDirection, float weaponAngleDegrees, float playerAngleDegrees, AimDirection playerAimDirection)
+    {
+        if (Input.GetMouseButton(0))
+        {
+            player.fireWeaponEvent.CallFireWeaponEvent(true, playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+        }
+    }
 
-		player.transform.position = targetPosition;
-	}
+    private void ReloadWeaponInput()
+    {
+        Weapon currentWeapon = player.activeWeapon.GetCurrentWeapon();
 
-	private void PlayerRollCooldownTimer()
-	{
-		if(playerRollCooldownTimer >= 0)
-		{
-			playerRollCooldownTimer -= Time.deltaTime;
-		}
-	}
+        //判断是否正在重装
+        if (currentWeapon.isWeaponReloading)
+            return;
 
-	private void OnCollisionEnter2D(Collision2D collision)
-	{
-		StopPlayerRollRoutine();
-	}
+        //判断弹药容量是否小于弹匣容量并且不是无限容量
+        if (currentWeapon.weaponRemainingAmmo < currentWeapon.weaponDetails.weaponClipAmmoCapacity && !currentWeapon.weaponDetails.hasInfiniteAmmo)
+            return;
 
-	private void OnCollisionStay2D(Collision2D collision)
-	{
-		StopPlayerRollRoutine();
-	}
+        if (currentWeapon.weaponClipRemainingAmmo == currentWeapon.weaponDetails.weaponClipAmmoCapacity) return;
 
-	private void StopPlayerRollRoutine()
-	{
-		if(playerRollCoroutine != null)
-		{
-			StopCoroutine(playerRollCoroutine);
-			isPlayerRolling = false;
-		}
-	}
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            player.reloadWeaponEvent.CallReloadWeaponEvent(currentWeapon, 0);
+        }
+    }
 
-	#region Validation
+    private void PlayerRoll(Vector3 direction)
+    {
+        playerRollCoroutine = StartCoroutine(PlayerRollRoutine(direction));
+    }
+
+    private IEnumerator PlayerRollRoutine(Vector3 direction)
+    {
+        float minDistance = 0.2f;
+
+        isPlayerRolling = true;
+
+        Vector3 targetPosition = player.transform.position + direction * movementDetails.rollDistance;
+
+        while (Vector3.Distance(targetPosition, player.transform.position) > minDistance)
+        {
+            player.movementToPositionEvent.CallMovementToPositionEvent(targetPosition, player.transform.position, movementDetails.rollSpeed, direction,
+                isPlayerRolling);
+
+            yield return waitForFixedUpdate;
+        }
+
+        isPlayerRolling = false;
+
+        playerRollCooldownTimer = movementDetails.rollCooldownTime;
+
+        player.transform.position = targetPosition;
+    }
+
+    private void PlayerRollCooldownTimer()
+    {
+        if (playerRollCooldownTimer >= 0)
+        {
+            playerRollCooldownTimer -= Time.deltaTime;
+        }
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        StopPlayerRollRoutine();
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        StopPlayerRollRoutine();
+    }
+
+    private void StopPlayerRollRoutine()
+    {
+        if (playerRollCoroutine != null)
+        {
+            StopCoroutine(playerRollCoroutine);
+            isPlayerRolling = false;
+        }
+    }
+
+    #region Validation
 
 #if UNITY_EDITOR
 
-	private void OnValidate()
-	{
-		HelperUtilities.ValidateCheckNullValue(this, nameof(movementDetails), movementDetails);
-	}
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(movementDetails), movementDetails);
+    }
 
 #endif
 
-	#endregion
+    #endregion
 }

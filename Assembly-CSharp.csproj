@@ -46,6 +46,7 @@
     <Compile Include="Assets\Scripts\Utilities\HelperUtilities.cs" />
     <Compile Include="Assets\Scripts\Misc\Settings.cs" />
     <Compile Include="Assets\Scripts\Weapons\Ammo\AmmoDetailsSO.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\SetActiveWeaponEvent.cs" />
     <Compile Include="Assets\Scripts\Weapons\Ammo\Ammo.cs" />
     <Compile Include="Assets\Scripts\StaticEvents\StaticEventHandler.cs" />
     <Compile Include="Assets\Scripts\Dungeon\DungeonLevelSO.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Assets\Scripts\Weapons\Weapons\AimWeapon.cs" />
     <Compile Include="Assets\Scripts\Player\PlayerControl.cs" />
     <Compile Include="Assets\Scripts\Movement\MovementByVelocityEvnet.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\Weapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\Ammo\IFireable.cs" />
     <Compile Include="Assets\Scripts\Movement\MovementToPositionEvent.cs" />
     <Compile Include="Assets\Scripts\GameManager\GameManager.cs" />
@@ -77,15 +79,17 @@
     <Compile Include="Assets\Scripts\Player\PlayerDetailsSO.cs" />
     <Compile Include="Assets\Scripts\Dungeon\RoomTemplateSO.cs" />
     <Compile Include="Assets\Scripts\Dungeon\Room.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\ActiveWeapon.cs" />
     <Compile Include="Assets\Scripts\Misc\CinemachineTarget.cs" />
     <Compile Include="Assets\Scripts\Player\AnimatePlayer.cs" />
     <Compile Include="Assets\Scripts\Enums\Enums.cs" />
     <Compile Include="Assets\Scripts\Player\Player.cs" />
     <Compile Include="Assets\Scripts\Dungeon\Doorway.cs" />
     <Compile Include="Assets\Scripts\NodeGraph\RoomNodeSO.cs" />
-    <Compile Include="Assets\Scripts\Weapons\Weapons\Weapon.cs" />
-    <Compile Include="Assets\Scripts\Weapons\Weapons\SetActiveWeaponEvent.cs" />
-    <Compile Include="Assets\Scripts\Weapons\Weapons\ActiveWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\FireWeaponEvent.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\WeaponFiredEvent.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\FireWeapon.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\ReloadWeaponEvent.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />
