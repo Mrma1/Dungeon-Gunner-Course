@@ -21,3 +21,4 @@ MonoBehaviour:
   startingWeapon: {fileID: 11400000, guid: eb928bc8aa95fb142b0bfd6bb50e3ee9, type: 2}
   startingWeaponList:
   - {fileID: 11400000, guid: eb928bc8aa95fb142b0bfd6bb50e3ee9, type: 2}
+  - {fileID: 11400000, guid: 5721ecf821223574f9bd3eeb1a273a60, type: 2}

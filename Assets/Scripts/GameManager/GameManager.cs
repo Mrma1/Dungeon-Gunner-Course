@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameManager : SingletonMonobehaviour<GameManager>
 {
     [SerializeField] private List<DungeonLevelSO> dungeonLevelList;
+
     //当前地牢等级
     [SerializeField] private int currentDungeonLevelListIndex = 0;
 
@@ -16,53 +17,52 @@ public class GameManager : SingletonMonobehaviour<GameManager>
 
     [HideInInspector] public GameState gameState;
 
-	protected override void Awake()
-	{
-		base.Awake();
+    protected override void Awake()
+    {
+        base.Awake();
 
         playerDetails = GameResources.Instance.currentPlayer.playerDetails;
 
         InstantiatePlayer();
-	}
+    }
 
     private void InstantiatePlayer()
     {
         GameObject playerGameObject = Instantiate(playerDetails.playerPrefab);
 
         player = playerGameObject.GetComponent<Player>();
-		player.Initialize(playerDetails);
+        player.Initialize(playerDetails);
     }
 
-	private void OnEnable()
-	{
+    private void OnEnable()
+    {
         StaticEventHandler.OnRoomChanged += StaticEventHandler_OnRoomChanged;
-	}
+    }
 
-	private void OnDisable()
-	{
-		StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
-	}
+    private void OnDisable()
+    {
+        StaticEventHandler.OnRoomChanged -= StaticEventHandler_OnRoomChanged;
+    }
 
     private void StaticEventHandler_OnRoomChanged(RoomChangedEventArgs roomChangedEventArgs)
     {
         SetCurrentRoom(roomChangedEventArgs.room);
     }
 
-	// Start is called before the first frame update
-	void Start()
+    // Start is called before the first frame update
+    void Start()
     {
         gameState = GameState.GameStarted;
         HandleGameState();
-
-	}
+    }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.R))
-        {
-			PlayDungeonLevel(currentDungeonLevelListIndex);
-		}
+        //       if(Input.GetKeyDown(KeyCode.R))
+        //       {
+        // 	PlayDungeonLevel(currentDungeonLevelListIndex);
+        // }
     }
 
     private void HandleGameState()
@@ -83,10 +83,10 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     }
 
     public void SetCurrentRoom(Room room)
-	{
-		previousRoom = currentRoom;
-		currentRoom = room;
-	}
+    {
+        previousRoom = currentRoom;
+        currentRoom = room;
+    }
 
     private void PlayDungeonLevel(int dungeonLevelListIndex)
     {
@@ -106,9 +106,9 @@ public class GameManager : SingletonMonobehaviour<GameManager>
     }
 
     public Room GetCurrentRoom()
-	{
-		return currentRoom;
-	}
+    {
+        return currentRoom;
+    }
 
     #region Validation
 

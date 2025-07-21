@@ -16,6 +16,7 @@ public class PlayerControl : MonoBehaviour
     private int currentWeaponIndex = 0;
     private bool isPlayerRolling = false;
     private float playerRollCooldownTimer = 0f;
+    private bool leftMouseDownPreviousFrame = false;
 
     private void Awake()
     {
@@ -133,7 +134,13 @@ public class PlayerControl : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            player.fireWeaponEvent.CallFireWeaponEvent(true, playerAimDirection, playerAngleDegrees, weaponAngleDegrees, weaponDirection);
+            player.fireWeaponEvent.CallFireWeaponEvent(true, leftMouseDownPreviousFrame, playerAimDirection, playerAngleDegrees, weaponAngleDegrees,
+                weaponDirection);
+            leftMouseDownPreviousFrame = true;
+        }
+        else
+        {
+            leftMouseDownPreviousFrame = false;
         }
     }
 

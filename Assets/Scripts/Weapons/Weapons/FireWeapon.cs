@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 [DisallowMultipleComponent]
 public class FireWeapon : MonoBehaviour
 {
+    private float firePreChargeTimer = 0f;
     private float fireRateCoolDownTimer = 0f;
     private ActiveWeapon activeWeapon;
     private FireWeaponEvent fireWeaponEvent;
@@ -45,6 +46,8 @@ public class FireWeapon : MonoBehaviour
 
     private void WeaponFire(FireWeaponEventArgs fireWeaponEventArgs)
     {
+        WeaponPreCharge(fireWeaponEventArgs);
+
         if (fireWeaponEventArgs.fire)
         {
             if (IsWeaponReadyToFire())
@@ -52,7 +55,21 @@ public class FireWeapon : MonoBehaviour
                 FireAmmo(fireWeaponEventArgs.aimAngle, fireWeaponEventArgs.weaponAimAngle, fireWeaponEventArgs.weaponAimDirectionVector);
 
                 ResetCoolDownTimer();
+
+                ResetPreChargeTimer();
             }
+        }
+    }
+
+    private void WeaponPreCharge(FireWeaponEventArgs fireWeaponEventArgs)
+    {
+        if (fireWeaponEventArgs.firePreviousFrame)
+        {
+            firePreChargeTimer -= Time.deltaTime;
+        }
+        else
+        {
+            ResetPreChargeTimer();
         }
     }
 
@@ -67,7 +84,7 @@ public class FireWeapon : MonoBehaviour
             return false;
 
         //正在冷却
-        if (fireRateCoolDownTimer > 0)
+        if (firePreChargeTimer > 0 || fireRateCoolDownTimer > 0)
             return false;
 
         //判断是否无限弹匣和弹匣容量是否为0
@@ -107,5 +124,10 @@ public class FireWeapon : MonoBehaviour
     private void ResetCoolDownTimer()
     {
         fireRateCoolDownTimer = activeWeapon.GetCurrentWeapon().weaponDetails.weaponFireRate;
+    }
+
+    private void ResetPreChargeTimer()
+    {
+        firePreChargeTimer = activeWeapon.GetCurrentWeapon().weaponDetails.weaponPrechargeTime;
     }
 }
