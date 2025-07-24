@@ -11,10 +11,10 @@ public class AmmoDetailsSO : ScriptableObject
     public Sprite ammoSprite;
     public GameObject[] ammoPrefabArray;
     public Material ammoMaterial;
-    [Header("µ¯Ò©Ìî³äÊ±¼ä")]
-    public float ammoChargeTime = 0.1f;
-    [Header("µ¯Ò©Ìî³ä²ÄÖÊ")]
-    public Material ammoChargeMaterial;
+    [Header("å¼¹è¯å¡«å……æ—¶é—´")] public float ammoChargeTime = 0.1f;
+    [Header("å¼¹è¯å¡«å……æè´¨")] public Material ammoChargeMaterial;
+
+    public AmmoHitEffectSO ammoHitEffect;
 
     public int ammoDamage = 1;
     public float ammoSpeedMin = 20f;
@@ -22,53 +22,50 @@ public class AmmoDetailsSO : ScriptableObject
     public float ammoRange = 20f;
     public float ammoRotationSpeed = 1f;
 
-    [Header("µ¯Ò©É¢Éä")]
-    public float ammoSpreadMin = 0f;
+    [Header("å¼¹è¯æ•£å°„")] public float ammoSpreadMin = 0f;
     public float ammoSpreadMax = 0f;
 
-    [Header("Ã¿´ÎÉú³ÉµÄÊýÁ¿")]
-    public int ammoSpawnAmountMin = 1;
+    [Header("æ¯æ¬¡ç”Ÿæˆçš„æ•°é‡")] public int ammoSpawnAmountMin = 1;
     public int ammoSpawnAmountMax = 1;
 
-    [Header("µ¯Ò©Éú³É¼ä¸ô")]
-    public float ammoSpawnIntervalMin = 0f;
+    [Header("å¼¹è¯ç”Ÿæˆé—´éš”")] public float ammoSpawnIntervalMin = 0f;
     public float ammoSpawnIntervalMax = 0f;
 
-    [Header("ÊÇ·ñÉú³É¹ì¼£")]
-    public bool isAmmoTrail = false;
-    [Header("¹ì¼£´æÔÚÊ±¼ä")]
-    public float ammoTrailTime = 3f;
+    [Header("æ˜¯å¦ç”Ÿæˆè½¨è¿¹")] public bool isAmmoTrail = false;
+    [Header("è½¨è¿¹å­˜åœ¨æ—¶é—´")] public float ammoTrailTime = 3f;
     public Material ammoTrailMaterial;
     [Range(0, 1f)] public float ammoTrailStartWidth;
     [Range(0, 1f)] public float ammoTrailEndWidth;
 
-	#region  Validation
+    #region Validation
+
 #if UNITY_EDITOR
-	private void OnValidate()
-	{
-		HelperUtilities.ValidateCheckEmptyString(this, nameof(ammoName), ammoName);
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckEmptyString(this, nameof(ammoName), ammoName);
         HelperUtilities.ValidateCheckNullValue(this, nameof(ammoSprite), ammoSprite);
         HelperUtilities.ValidateCheckEnumerableValues(this, nameof(ammoPrefabArray), ammoPrefabArray);
-		HelperUtilities.ValidateCheckNullValue(this, nameof(ammoMaterial), ammoMaterial);
-        if(ammoChargeTime > 0f)
-			HelperUtilities.ValidateCheckNullValue(this, nameof(ammoChargeMaterial), ammoChargeMaterial);
+        HelperUtilities.ValidateCheckNullValue(this, nameof(ammoMaterial), ammoMaterial);
+        if (ammoChargeTime > 0f)
+            HelperUtilities.ValidateCheckNullValue(this, nameof(ammoChargeMaterial), ammoChargeMaterial);
 
         HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoDamage), ammoDamage, false);
         HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpeedMin), ammoSpeedMin, nameof(ammoSpeedMax), ammoSpeedMax, false);
-		HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoRange), ammoRange, false);
-		HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpreadMin), ammoSpreadMin, nameof(ammoSpreadMax), ammoSpreadMax, true);
-		HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnAmountMin), ammoSpawnAmountMin, nameof(ammoSpawnAmountMax), ammoSpawnAmountMax, false);
-		HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnIntervalMin), ammoSpawnIntervalMin, nameof(ammoSpawnIntervalMax), ammoSpawnIntervalMax, true);
+        HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoRange), ammoRange, false);
+        HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpreadMin), ammoSpreadMin, nameof(ammoSpreadMax), ammoSpreadMax, true);
+        HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnAmountMin), ammoSpawnAmountMin, nameof(ammoSpawnAmountMax), ammoSpawnAmountMax, false);
+        HelperUtilities.ValidateCheckPositiveRange(this, nameof(ammoSpawnIntervalMin), ammoSpawnIntervalMin, nameof(ammoSpawnIntervalMax), ammoSpawnIntervalMax,
+            true);
 
-        if(isAmmoTrail)
+        if (isAmmoTrail)
         {
-			HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailTime), ammoTrailTime, false);
-			HelperUtilities.ValidateCheckNullValue(this, nameof(ammoTrailMaterial), ammoTrailMaterial);
-			HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailStartWidth), ammoTrailStartWidth, false);
-			HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailEndWidth), ammoTrailEndWidth, false);
-		}
-
-	}
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailTime), ammoTrailTime, false);
+            HelperUtilities.ValidateCheckNullValue(this, nameof(ammoTrailMaterial), ammoTrailMaterial);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailStartWidth), ammoTrailStartWidth, false);
+            HelperUtilities.ValidateCheckPositiveValue(this, nameof(ammoTrailEndWidth), ammoTrailEndWidth, false);
+        }
+    }
 #endif
-	#endregion
+
+    #endregion
 }

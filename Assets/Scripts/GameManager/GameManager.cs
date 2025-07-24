@@ -88,6 +88,11 @@ public class GameManager : SingletonMonobehaviour<GameManager>
         currentRoom = room;
     }
 
+    public Sprite GetPlayerMiniMapIcon()
+    {
+        return playerDetails.playerMiniMapIcon;
+    }
+
     private void PlayDungeonLevel(int dungeonLevelListIndex)
     {
         bool dungeonBuiltSuccessfully = DungeonBuilder.Instance.GenerateDungeon(dungeonLevelList[dungeonLevelListIndex]);

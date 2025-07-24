@@ -51,6 +51,11 @@ public class ReloadWeapon : MonoBehaviour
 
     private IEnumerator ReloadWeaponCoroutine(Weapon weapon, int topUpAmmoPercent)
     {
+        if (weapon.weaponDetails.weaponReloadingSoundEffect != null)
+        {
+            SoundEffectManager.Instance.PlaySoundEffect(weapon.weaponDetails.weaponReloadingSoundEffect);
+        }
+
         weapon.isWeaponReloading = true;
 
         while (weapon.weaponReloadTimer < weapon.weaponDetails.weaponReloadTime)

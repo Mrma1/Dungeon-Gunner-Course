@@ -4001,6 +4001,7 @@ SpriteAtlas:
   - {fileID: 607360796130650397, guid: 86b7768c29a1e654d93c544c4d513c51, type: 3}
   - {fileID: 1123601393841034714, guid: 86b7768c29a1e654d93c544c4d513c51, type: 3}
   - {fileID: -7394418947485357700, guid: 86b7768c29a1e654d93c544c4d513c51, type: 3}
+  - {fileID: 21300000, guid: fc12fe8cdf14aeb4ca61ab2654a930c0, type: 3}
   - {fileID: -4591653228694091495, guid: 98ca0f8cabcfd5043a6a1263f66bcb67, type: 3}
   - {fileID: 435345890368272357, guid: 98ca0f8cabcfd5043a6a1263f66bcb67, type: 3}
   - {fileID: 307828637735092724, guid: 98ca0f8cabcfd5043a6a1263f66bcb67, type: 3}
@@ -8895,6 +8896,7 @@ SpriteAtlas:
   - statue_iron_golem_1
   - statue_iron_golem_2
   - statue_iron_golem_3
+  - Shader Test Colours
   - sigil_Y_W_2
   - sigil_Y_W_3
   - sigil_Y_W_0

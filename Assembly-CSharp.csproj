@@ -93,6 +93,16 @@
     <Compile Include="Assets\Scripts\Weapons\Weapons\ReloadWeapon.cs" />
     <Compile Include="Assets\Scripts\Weapons\Weapons\WeaponReloadedEvent.cs" />
     <Compile Include="Assets\Scripts\UI\WeaponStatusUI.cs" />
+    <Compile Include="Assets\Scripts\Sounds\SoundEffectSO.cs" />
+    <Compile Include="Assets\Scripts\Sounds\SoundEffect.cs" />
+    <Compile Include="Assets\Scripts\Sounds\SoundEffectManager.cs" />
+    <Compile Include="Assets\Scripts\Minimap\Minimap.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\WeaponShootEffectSO.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Weapons\WeaponShootEffect.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Ammo\AmmoHitEffectSO.cs" />
+    <Compile Include="Assets\Scripts\Weapons\Ammo\AmmoHitEffect.cs" />
+    <Compile Include="Assets\Scripts\Enemies\EnemyDetailsSO.cs" />
+    <Compile Include="Assets\Scripts\Enemies\Enemy.cs" />
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap.shader" />

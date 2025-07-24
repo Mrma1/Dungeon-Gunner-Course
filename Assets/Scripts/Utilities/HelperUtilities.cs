@@ -50,11 +50,11 @@ public static class HelperUtilities
     {
         AimDirection aimDirection;
 
-        if(angleDegrees >= 22f && angleDegrees <= 67f)
+        if (angleDegrees >= 22f && angleDegrees <= 67f)
         {
             aimDirection = AimDirection.UpRight;
         }
-        else if(angleDegrees > 67f && angleDegrees <= 112f)
+        else if (angleDegrees > 67f && angleDegrees <= 112f)
         {
             aimDirection = AimDirection.Up;
         }
@@ -62,24 +62,30 @@ public static class HelperUtilities
         {
             aimDirection = AimDirection.UpLeft;
         }
-        else if((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
+        else if ((angleDegrees <= 180f && angleDegrees > 158f) || (angleDegrees > -180 && angleDegrees <= -135f))
         {
             aimDirection = AimDirection.Left;
         }
-        else if(angleDegrees > -135f && angleDegrees <=-45f)
+        else if (angleDegrees > -135f && angleDegrees <= -45f)
         {
             aimDirection = AimDirection.Down;
         }
-        else if((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
+        else if ((angleDegrees > -45f && angleDegrees <= 0f) || (angleDegrees > 0 && angleDegrees < 22f))
         {
             aimDirection = AimDirection.Right;
         }
         else
         {
             aimDirection = AimDirection.Right;
-        }    
+        }
 
         return aimDirection;
+    }
+
+    public static float LinearToDecibels(int linear)
+    {
+        float linearScaleRange = 20f;
+        return Mathf.Log10((float)linear / linearScaleRange) * 20f;
     }
 
     public static bool ValidateCheckEmptyString(Object thisObject, string fileName, string stringToCheck)
@@ -89,7 +95,7 @@ public static class HelperUtilities
             Debug.Log(fileName + " is empty and contain a value in object" + thisObject.name.ToString());
             return true;
         }
-        
+
         return false;
     }
 
@@ -121,7 +127,7 @@ public static class HelperUtilities
             Debug.Log(fileName + " is null in object" + thisObject.name.ToString());
             return true;
         }
-        
+
         foreach (var item in enumerableObjectToCheck)
         {
             if (item == null)
@@ -140,7 +146,7 @@ public static class HelperUtilities
             Debug.Log(fileName + " has no values in object" + thisObject.name.ToString());
             error = true;
         }
-        
+
         return error;
     }
 
@@ -168,31 +174,31 @@ public static class HelperUtilities
         return error;
     }
 
-	public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
-	{
-		bool error = false;
+    public static bool ValidateCheckPositiveValue(Object thisObject, string fieldName, float valueToCheck, bool isZeroAllowed)
+    {
+        bool error = false;
 
-		if (isZeroAllowed)
-		{
-			if (valueToCheck < 0)
-			{
-				Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
-				error = true;
-			}
-		}
-		else
-		{
-			if (valueToCheck <= 0)
-			{
-				Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
-				error = true;
-			}
-		}
+        if (isZeroAllowed)
+        {
+            if (valueToCheck < 0)
+            {
+                Debug.Log(fieldName + " must contain a positive value or zero in object " + thisObject.name.ToString());
+                error = true;
+            }
+        }
+        else
+        {
+            if (valueToCheck <= 0)
+            {
+                Debug.Log(fieldName + " must contain a positive value in object " + thisObject.name.ToString());
+                error = true;
+            }
+        }
 
-		return error;
-	}
+        return error;
+    }
 
-    public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum, string fieldNameMaximum, 
+    public static bool ValidateCheckPositiveRange(Object thisObject, string fieldNameMinimum, float valueToCheckMinimum, string fieldNameMaximum,
         float valueToCheckMaximum, bool isZeroAllowed)
     {
         bool error = false;
@@ -203,12 +209,12 @@ public static class HelperUtilities
         }
 
         if (ValidateCheckPositiveValue(thisObject, fieldNameMinimum, valueToCheckMinimum, isZeroAllowed)) error = true;
-		if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed)) error = true;
+        if (ValidateCheckPositiveValue(thisObject, fieldNameMaximum, valueToCheckMaximum, isZeroAllowed)) error = true;
 
         return error;
-	}
+    }
 
-	public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
+    public static Vector3 GetSpawnPositionNearestToPlayer(Vector3 playerPosition)
     {
         Room currentRoom = GameManager.Instance.GetCurrentRoom();
 
@@ -219,9 +225,9 @@ public static class HelperUtilities
         foreach (Vector2Int spawnPositionGrid in currentRoom.spawnPositionArray)
         {
             Vector3 spawnPositionWorld = grid.CellToWorld((Vector3Int)spawnPositionGrid);
-            if(Vector3.Distance(spawnPositionWorld, playerPosition) < Vector3.Distance(nearestSpawnPosition, playerPosition))
+            if (Vector3.Distance(spawnPositionWorld, playerPosition) < Vector3.Distance(nearestSpawnPosition, playerPosition))
             {
-				nearestSpawnPosition = spawnPositionWorld;
+                nearestSpawnPosition = spawnPositionWorld;
             }
         }
 

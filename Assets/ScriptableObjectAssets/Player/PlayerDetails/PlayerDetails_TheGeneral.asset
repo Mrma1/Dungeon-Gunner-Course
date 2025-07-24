@@ -22,3 +22,10 @@ MonoBehaviour:
   startingWeaponList:
   - {fileID: 11400000, guid: eb928bc8aa95fb142b0bfd6bb50e3ee9, type: 2}
   - {fileID: 11400000, guid: 5721ecf821223574f9bd3eeb1a273a60, type: 2}
+  - {fileID: 11400000, guid: 2ff880ebe73746644822b07c730a5cf2, type: 2}
+  - {fileID: 11400000, guid: 34da8dfad57fd3a4d9bb090aaa19343e, type: 2}
+  - {fileID: 11400000, guid: f7295a06fc240564cb0ef0c78af3370d, type: 2}
+  - {fileID: 11400000, guid: 76b3aa16a24529a4c8d6f7a3211382a2, type: 2}
+  - {fileID: 11400000, guid: 06ef779f3685c9c45a1613244d3684c7, type: 2}
+  - {fileID: 11400000, guid: 16845d37ce9b6fb4c8b8306b2b23d72a, type: 2}
+  - {fileID: 11400000, guid: 3ae95bd6fc869104dba882ef670c22c8, type: 2}

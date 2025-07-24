@@ -5,154 +5,173 @@ using UnityEngine;
 [DisallowMultipleComponent]
 public class Ammo : MonoBehaviour, IFireable
 {
-	[SerializeField] private TrailRenderer trailRenderer;
+    [SerializeField] private TrailRenderer trailRenderer;
 
-	// 射程范围
-	private float ammoRange = 0f;
-	private float ammoSpeed;
-	private Vector3 fireDirectionVector;
-	private float fireDirectionAngle;
-	private SpriteRenderer spriteRenderer;
-	private AmmoDetailsSO ammoDetails;
-	//填充计时
-	private float ammoChargeTimer;
-	private bool isAmmoMaterialSet = false;
-	private bool overrideAmmoMovement;
+    // 射程范围
+    private float ammoRange = 0f;
+    private float ammoSpeed;
+    private Vector3 fireDirectionVector;
+    private float fireDirectionAngle;
+    private SpriteRenderer spriteRenderer;
 
-	private void Awake()
-	{
-		spriteRenderer = GetComponent<SpriteRenderer>();
-	}
+    private AmmoDetailsSO ammoDetails;
 
-	private void Update()
-	{
-		if(ammoChargeTimer > 0f)
-		{
-			ammoChargeTimer -= Time.deltaTime;
-			return;
-		}
-		else if(!isAmmoMaterialSet)
-		{
-			SetAmmoMaterial(ammoDetails.ammoMaterial);
-			isAmmoMaterialSet = true;
-		}
+    //填充计时
+    private float ammoChargeTimer;
+    private bool isAmmoMaterialSet = false;
+    private bool overrideAmmoMovement;
 
-		//移动
-		Vector3 distanceVector = fireDirectionVector * ammoSpeed * Time.deltaTime;
-		transform.position += distanceVector;
+    private void Awake()
+    {
+        spriteRenderer = GetComponent<SpriteRenderer>();
+    }
 
-		ammoRange -= distanceVector.magnitude;
+    private void Update()
+    {
+        if (ammoChargeTimer > 0f)
+        {
+            ammoChargeTimer -= Time.deltaTime;
+            return;
+        }
+        else if (!isAmmoMaterialSet)
+        {
+            SetAmmoMaterial(ammoDetails.ammoMaterial);
+            isAmmoMaterialSet = true;
+        }
 
-		if(ammoRange <0f)
-		{
-			DisableAmmo();
-		}
-	}
+        //移动
+        Vector3 distanceVector = fireDirectionVector * ammoSpeed * Time.deltaTime;
+        transform.position += distanceVector;
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		DisableAmmo();
-	}
+        ammoRange -= distanceVector.magnitude;
 
-	public void InitialiseAmmo(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector, bool overrideAmmoMovement = false)
-	{
-		#region Ammo
-		this.ammoDetails = ammoDetails;
+        if (ammoRange < 0f)
+        {
+            DisableAmmo();
+        }
+    }
 
-		SetFirDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector);
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        AmmoHitEffect();
 
-		spriteRenderer.sprite = ammoDetails.ammoSprite;
+        DisableAmmo();
+    }
 
-		if(ammoDetails.ammoChargeTime > 0f)
-		{
-			ammoChargeTimer = ammoDetails.ammoChargeTime;
-			SetAmmoMaterial(ammoDetails.ammoChargeMaterial);
-			isAmmoMaterialSet = false;
-		}
-		else
-		{
-			ammoChargeTimer = 0f;
-			SetAmmoMaterial(ammoDetails.ammoMaterial);
-			isAmmoMaterialSet = true;
-		}
+    public void InitialiseAmmo(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, float ammoSpeed, Vector3 weaponAimDirectionVector,
+        bool overrideAmmoMovement = false)
+    {
+        #region Ammo
 
-		ammoRange = ammoDetails.ammoRange;
-		this.ammoSpeed = ammoSpeed;
-		this.overrideAmmoMovement = overrideAmmoMovement;
+        this.ammoDetails = ammoDetails;
 
-		gameObject.SetActive(true);
+        SetFirDirection(ammoDetails, aimAngle, weaponAimAngle, weaponAimDirectionVector);
 
-		#endregion
+        spriteRenderer.sprite = ammoDetails.ammoSprite;
 
-		#region  Trail
+        if (ammoDetails.ammoChargeTime > 0f)
+        {
+            ammoChargeTimer = ammoDetails.ammoChargeTime;
+            SetAmmoMaterial(ammoDetails.ammoChargeMaterial);
+            isAmmoMaterialSet = false;
+        }
+        else
+        {
+            ammoChargeTimer = 0f;
+            SetAmmoMaterial(ammoDetails.ammoMaterial);
+            isAmmoMaterialSet = true;
+        }
 
-		if (ammoDetails.isAmmoTrail)
-		{
-			trailRenderer.gameObject.SetActive(true);
-			trailRenderer.emitting = true;
-			trailRenderer.material = ammoDetails.ammoTrailMaterial;
-			trailRenderer.startWidth = ammoDetails.ammoTrailStartWidth;
-			trailRenderer.endWidth = ammoDetails.ammoTrailEndWidth;
-			trailRenderer.time = ammoDetails.ammoTrailTime;
-		}
-		else
-		{
-			trailRenderer.emitting = false;
-			trailRenderer.gameObject.SetActive(false);
-		}
+        ammoRange = ammoDetails.ammoRange;
+        this.ammoSpeed = ammoSpeed;
+        this.overrideAmmoMovement = overrideAmmoMovement;
 
-		#endregion
-	}
+        gameObject.SetActive(true);
 
-	private void SetFirDirection(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
-	{
-		//随机散射大小
-		float randomSpread = Random.Range(ammoDetails.ammoSpreadMin, ammoDetails.ammoSpreadMax);
+        #endregion
 
-		//随机 -1或者1
-		int spreadToggle = Random.Range(0, 2) * 2 - 1;
+        #region Trail
 
-		//判断射击向量距离，如果小于最小距离使用自身角度，否则使用武器角度
-		if(weaponAimDirectionVector.magnitude < Settings.useAimAngleDistance)
-		{
-			fireDirectionAngle = aimAngle;
-		}
-		else
-		{
-			fireDirectionAngle = weaponAimAngle;
-		}
+        if (ammoDetails.isAmmoTrail)
+        {
+            trailRenderer.gameObject.SetActive(true);
+            trailRenderer.emitting = true;
+            trailRenderer.material = ammoDetails.ammoTrailMaterial;
+            trailRenderer.startWidth = ammoDetails.ammoTrailStartWidth;
+            trailRenderer.endWidth = ammoDetails.ammoTrailEndWidth;
+            trailRenderer.time = ammoDetails.ammoTrailTime;
+        }
+        else
+        {
+            trailRenderer.emitting = false;
+            trailRenderer.gameObject.SetActive(false);
+        }
 
-		//添加散射偏移
-		fireDirectionAngle += spreadToggle * randomSpread;
-		//应用角度
-		transform.transform.eulerAngles = new Vector3(0, 0, fireDirectionAngle);
+        #endregion
+    }
 
-		fireDirectionVector = HelperUtilities.GetDirectionVectorFromAngle(fireDirectionAngle);
-	}
+    private void SetFirDirection(AmmoDetailsSO ammoDetails, float aimAngle, float weaponAimAngle, Vector3 weaponAimDirectionVector)
+    {
+        //随机散射大小
+        float randomSpread = Random.Range(ammoDetails.ammoSpreadMin, ammoDetails.ammoSpreadMax);
 
-	private void DisableAmmo()
-	{
-		gameObject.SetActive(false);
-	}
+        //随机 -1或者1
+        int spreadToggle = Random.Range(0, 2) * 2 - 1;
 
-	public void SetAmmoMaterial(Material material)
-	{
-		spriteRenderer.material = material;
-	}
+        //判断射击向量距离，如果小于最小距离使用自身角度，否则使用武器角度
+        if (weaponAimDirectionVector.magnitude < Settings.useAimAngleDistance)
+        {
+            fireDirectionAngle = aimAngle;
+        }
+        else
+        {
+            fireDirectionAngle = weaponAimAngle;
+        }
 
-	public GameObject GetGameObject()
-	{
-		return gameObject;
-	}
+        //添加散射偏移
+        fireDirectionAngle += spreadToggle * randomSpread;
+        //应用角度
+        transform.transform.eulerAngles = new Vector3(0, 0, fireDirectionAngle);
 
-	#region  Validation
+        fireDirectionVector = HelperUtilities.GetDirectionVectorFromAngle(fireDirectionAngle);
+    }
+
+    private void DisableAmmo()
+    {
+        gameObject.SetActive(false);
+    }
+
+    private void AmmoHitEffect()
+    {
+        if (ammoDetails.ammoHitEffect != null && ammoDetails.ammoHitEffect.ammoHitEffectPrefab != null)
+        {
+            AmmoHitEffect ammoHitEffect =
+                (AmmoHitEffect)PoolManager.Instance.ReuseComponent(ammoDetails.ammoHitEffect.ammoHitEffectPrefab, transform.position, Quaternion.identity);
+            ammoHitEffect.SetHitEffect(ammoDetails.ammoHitEffect);
+            ammoHitEffect.gameObject.SetActive(true);
+        }
+    }
+
+    public void SetAmmoMaterial(Material material)
+    {
+        spriteRenderer.material = material;
+    }
+
+    public GameObject GetGameObject()
+    {
+        return gameObject;
+    }
+
+    #region Validation
+
 #if UNITY_EDITOR
 
-	private void OnValidate()
-	{
-		HelperUtilities.ValidateCheckNullValue(this, nameof(trailRenderer), trailRenderer);
-	}
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(trailRenderer), trailRenderer);
+    }
 
 #endif
-	#endregion
+
+    #endregion
 }

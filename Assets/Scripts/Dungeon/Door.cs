@@ -4,7 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(Animator))]
 [DisallowMultipleComponent]
-
 public class Door : MonoBehaviour
 {
     [SerializeField] private BoxCollider2D doorCollider;
@@ -15,68 +14,70 @@ public class Door : MonoBehaviour
     private bool previouslyOpened = false;
     private Animator animator;
 
-	private void Awake()
-	{
+    private void Awake()
+    {
         doorCollider.enabled = false;
 
         doorTrigger = GetComponent<BoxCollider2D>();
-		animator = GetComponent<Animator>();
-	}
+        animator = GetComponent<Animator>();
+    }
 
-	private void OnTriggerEnter2D(Collider2D collision)
-	{
-		if (collision.tag is Settings.playerTag or Settings.playerWeapon) 
-		{
-			OpenDoor();
-		}
-	}
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.tag is Settings.playerTag or Settings.playerWeapon)
+        {
+            OpenDoor();
+        }
+    }
 
-	private void OnEnable()
-	{
-		animator.SetBool(Settings.open, isOpen);
-	}
+    private void OnEnable()
+    {
+        animator.SetBool(Settings.open, isOpen);
+    }
 
-	public void OpenDoor()
-	{
-		if(!isOpen)
-		{
-			isOpen = true;
-			previouslyOpened = true;
-			doorCollider.enabled = false;
-			doorTrigger.enabled = false;
+    public void OpenDoor()
+    {
+        if (!isOpen)
+        {
+            isOpen = true;
+            previouslyOpened = true;
+            doorCollider.enabled = false;
+            doorTrigger.enabled = false;
 
-			animator.SetBool(Settings.open, true);
-		}
-	}
+            animator.SetBool(Settings.open, true);
 
-	public void LockDoor()
-	{
-		isOpen = false;
-		doorCollider.enabled = true;
-		doorTrigger.enabled = false;
+            SoundEffectManager.Instance.PlaySoundEffect(GameResources.Instance.doorOpenCloseSoundEffect);
+        }
+    }
 
-		animator.SetBool(Settings.open, false);
-	}
+    public void LockDoor()
+    {
+        isOpen = false;
+        doorCollider.enabled = true;
+        doorTrigger.enabled = false;
 
-	public void UnLockDoor()
-	{
-		doorCollider.enabled = false;
-		doorTrigger.enabled = true;
-		if(previouslyOpened)
-		{
-			isOpen = false;
-			OpenDoor();
-		}
-	}
+        animator.SetBool(Settings.open, false);
+    }
 
-	#region Validation
+    public void UnLockDoor()
+    {
+        doorCollider.enabled = false;
+        doorTrigger.enabled = true;
+        if (previouslyOpened)
+        {
+            isOpen = false;
+            OpenDoor();
+        }
+    }
+
+    #region Validation
 
 #if UNITY_EDITOR
-	private void OnValidate()
-	{
-		HelperUtilities.ValidateCheckNullValue(this, nameof(doorCollider), doorCollider);
-	}
+    private void OnValidate()
+    {
+        HelperUtilities.ValidateCheckNullValue(this, nameof(doorCollider), doorCollider);
+    }
 #endif
 
-	#endregion
+    #endregion
 }
